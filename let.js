@@ -26,14 +26,43 @@
 // console.log(xiaoming) // {age: 11, sex: "male"}
 
 // ES6前如何定义常量
-var CST = {}
-Object.defineProperty(CST, 'A', {
-    value: 1,
-    writeble: false
-})
-CST.A =2
-console.log(CST) // {A: 1} 以上保证A不能被修改，但CST仍可扩展
+// var CST = {}
+// Object.defineProperty(CST, 'A', {
+//     value: 1,
+//     writeble: false
+// })
+// CST.A =2
+// console.log(CST) // {A: 1} 以上保证A不能被修改，但CST仍可扩展
 
-Object.seal(CST)
-CST.B = 2
-console.log(CST) // {A: 1} seal:保CST不能被扩展，但CST属性仍可修改
+// Object.seal(CST)
+// CST.B = 2
+// console.log(CST) // {A: 1} seal:保CST不能被扩展，但CST属性仍可修改
+
+// 扩展，es5实现一个常量方法
+// 1. 遍历属性和方法
+// 2. 修改遍历到的属性的描述
+// 3. Object.seal()
+
+Object.defineProperty(Object, 'freezePolyfill', {
+    value: function(obj) {
+      var i;
+      for (i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          Object.defineProperty(obj, i, {
+            writable: false
+          });
+        }
+      }
+      Object.seal(obj);
+    }
+  });
+  
+  const xiaoming = {
+    age: 14,
+    name: '小明',
+    obj: {
+      a: 1
+    }
+  };
+  
+  Object.freezePolyfill(xiaoming);
