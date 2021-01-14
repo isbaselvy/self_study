@@ -103,3 +103,66 @@
 //     // 方法2： at 取下标字符
 //     // console.log('🐶abc'.at(2)) // 兼容性不好，谷歌不支持。便于经工具转译兼容
 // }
+
+
+/**
+ * 正则表达式扩展
+ */
+// console.log(/^\ud83d/.test('\ud83d\udc36')) // true '\ud83d\udc36'为"🐶"，不加u修饰符会识别成两个字符 \ud83d \udc36
+// console.log(/^\ud83d/u.test('\ud83d\udc36')) // false
+
+// y粘连修饰符
+// const r1 = /imooc/g // g 全局匹配，会匹配出3个imooc，上下两次的匹配索引不必相连
+// const r2 = /imooc/y // y 匹配前两个immoc，下一次的开始索引必须紧接上一次
+
+// const str = 'imoocimooc-imooc'
+// console.log(r1.exec(str)) // imooc 
+// console.log(r1.exec(str)) // imooc
+// console.log(r1.exec(str)) // imooc
+// console.log(r1.exec(str)) // null
+
+// console.log(r2.exec(str)) // imooc
+// console.log(r2.exec(str)) // imooc
+// console.log(r2.exec(str)) // null
+
+/**
+ * 数值的扩展你
+ */
+// 新的进制表示法 0o 0O 十六进制必须以此开头 0b 0B 二进制
+
+// 新的安全数 将parseInt parseFloat  isNaN  isFinite 挂在对象从window变到Number
+// Number.parseInt()
+// Number.parseFloat()
+// Number.isNaN()
+// Number.isFinite()
+
+// console.log(NaN == NaN) // false
+// 利用以上特性，写一个NaN
+// function isNaN(value) {
+//     return value !== value
+// }
+// console.log(isNaN(1.2)) // false
+// console.log(isNaN(-NaN)) // true
+// console.log(isNaN('str' + 1)) // false
+
+/**
+ * isFinite() 函数用于检测指定参数是否为无穷大。
+提示： 如果 number 是 NaN（非数字），或者是正、负无穷大的数，则返回 false。
+Number.isFinite() 与全局的 isFinite() 函数不同，全局的 isFinite() 会先把检测值转换为 Number ，然后在检测。
+Number.isFinite() 不会将检测值转换为 Number对象，如果检测值不是 Number 类型，则返回 false。
+ */
+// console.log(Number.isFinite(Infinity)) // false
+// console.log(Number.isFinite(2/0)) // false
+// console.log(Number.isFinite(1/3)) // true
+// console.log(Number.isFinite('1234')) // false
+// console.log(isFinite('1234')) // false
+// console.log(Number.isFinite(1234)) // true
+
+// Number.isSafeInteger判断一个数是否在js能精确表示的范围内，及2**53 - 1和 -(2**53 - 1)之间
+// console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER - 1)) // true
+// console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1)) // false
+
+// 幂运算：注意 是右结合的运算
+console.log( 2 ** 10) // 1024
+console.log( 2 ** 10 ** 0) // 2 先算10的0次方
+console.log( (2**10) ** 0) // 1
