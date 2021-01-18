@@ -163,6 +163,23 @@ Number.isFinite() 不会将检测值转换为 Number对象，如果检测值不�
 // console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1)) // false
 
 // 幂运算：注意 是右结合的运算
-console.log( 2 ** 10) // 1024
-console.log( 2 ** 10 ** 0) // 2 先算10的0次方
-console.log( (2**10) ** 0) // 1
+// console.log( 2 ** 10) // 1024
+// console.log( 2 ** 10 ** 0) // 2 先算10的0次方
+// console.log( (2**10) ** 0) // 1
+
+/**
+ * 函数的扩展
+ */
+// 默认参数
+// function add(x, y = 99 + x, z) { // 默认参数不能出现之后的参数
+//     console.log(x, y, z) // 1 100 undefined
+// }
+
+// add(1)
+
+// // 结合结构赋值
+// function People({name, age = 19} = {name: 1}) {
+//     console.log(name, age) // 1 19
+// }
+// People()
+
