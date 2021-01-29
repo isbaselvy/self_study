@@ -1,6 +1,7 @@
 /**
+ * 以下为在看easyui源码时学到
  * 丢掉累赘的长串if...else...，没有它们的代码好清爽
- * 
+ * todo 更复杂逻辑可参考：https://juejin.cn/post/6844903705058213896，待吸收整理
  */
 // 改造前的代码
 function setinput(data) {
