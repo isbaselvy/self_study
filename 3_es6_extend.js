@@ -183,3 +183,115 @@ Number.isFinite() 不会将检测值转换为 Number对象，如果检测值不�
 // }
 // People()
 
+// 2.结合扩展运算符(剩余参数...)，剩余参数做聚合
+
+// function sum(...args) {
+// 	// let args = Array.prototype.slice.call(arguments);
+// 	// let args = [...arguments];
+// 	// let [...args] = arguments;
+// 	console.log(args);
+// }
+
+// sum(1, 2, 321, 4354, 'fdafsd');
+
+
+// function op(type, b, ...nums) {
+// 	console.log(type);
+// 	console.log(nums);
+// }
+
+// op('sum', 1, 23, 454, 3, 67, 234);
+
+function sum(...numbers) {
+	return numbers.reduce(function(a, b) {
+		return a + b;
+	}, 0);
+}
+
+console.log(sum(1, 2, 3, 4));
+
+// 箭头函数
+
+// const add1 = (a, b) => {
+// 	a += 1;
+// 	return a + b;
+// };
+
+// const add2 = function(a, b) {
+// 	a += 1;
+// 	return a + b;
+// }
+
+// console.log(add1(2, 2));
+// console.log(add2(2, 2));
+
+// const pop = arr => void arr.pop();
+
+// console.log(pop([1, 2, 3]));
+
+// const log = () => {
+// 	console.log(arguments);
+// };
+
+// log(1, 2, 3);
+
+// 区别： this指向
+{
+	const xiaoming = {
+		name: '小明',
+		say1: function() {
+			console.log(this);
+		},
+		say2: () => {
+			console.log(this);
+		}
+	}
+	
+	xiaoming.say1(); // xiaoming
+	xiaoming.say2(); // window
+}
+
+ 
+
+
+// const xiaoming = {
+// 	name: 'xiaoming',
+// 	age: null,
+// 	getAge: function() {
+// 		let _this = this;
+// 		// ...ajax
+// 		setTimeout(function() {
+// 			_this.age = 14;
+// 			console.log(_this);
+// 		}, 1000);
+
+// 	}
+// }; 
+
+// xiaoming.getAge();
+  
+{
+	const xiaoming = {
+		name: 'xiaoming',
+		age: null,
+		getAge: function() {
+	
+	
+			// ...ajax
+			setTimeout(() => {
+				this.age = 14;
+				console.log(this);
+			}, 1000);
+	
+		},
+		getNameNew: () => {
+			setTimeout(() => {
+				this.newName = 'xiaomingNew';
+				console.log(this);
+			}, 1000);
+		}
+	};
+	
+	xiaoming.getAge(); // xiaoming
+	xiaoming.getNameNew() // window
+}
