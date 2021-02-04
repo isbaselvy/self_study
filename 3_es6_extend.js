@@ -208,7 +208,7 @@ function sum(...numbers) {
 	}, 0);
 }
 
-console.log(sum(1, 2, 3, 4));
+// console.log(sum(1, 2, 3, 4));
 
 // 箭头函数
 
@@ -236,20 +236,20 @@ console.log(sum(1, 2, 3, 4));
 // log(1, 2, 3);
 
 // 区别： this指向
-{
-	const xiaoming = {
-		name: '小明',
-		say1: function() {
-			console.log(this);
-		},
-		say2: () => {
-			console.log(this);
-		}
-	}
+// {
+// 	const xiaoming = {
+// 		name: '小明',
+// 		say1: function() {
+// 			console.log(this);
+// 		},
+// 		say2: () => {
+// 			console.log(this);
+// 		}
+// 	}
 	
-	xiaoming.say1(); // xiaoming
-	xiaoming.say2(); // window
-}
+// 	xiaoming.say1(); // xiaoming
+// 	xiaoming.say2(); // window
+// }
 
  
 
@@ -270,28 +270,206 @@ console.log(sum(1, 2, 3, 4));
 
 // xiaoming.getAge();
   
+// {
+// 	const xiaoming = {
+// 		name: 'xiaoming',
+// 		age: null,
+// 		getAge: function() {
+	
+	
+// 			// ...ajax
+// 			setTimeout(() => {
+// 				this.age = 14;
+// 				console.log(this);
+// 			}, 1000);
+	
+// 		},
+// 		getNameNew: () => {
+// 			setTimeout(() => {
+// 				this.newName = 'xiaomingNew';
+// 				console.log(this);
+// 			}, 1000);
+// 		}
+// 	};
+	
+// 	xiaoming.getAge(); // xiaoming
+// 	xiaoming.getNameNew() // window
+// }
+
+/**
+ * 对象的扩展
+ */
+
+// 1.简洁表示法: key与value变量同名，可省略简写一个。方法可省略function，以下两种写法等价
 {
+	const getUserInfo = (id = 1) => {
+		const name = 'xiaoming';
+		const age = 10;
+		return {
+			name, // name: name,
+			age,// age: age,
+			say(){ // say: function() {
+				console.log(this.name + this.age);
+			}
+		};
+	}; 
+	
+	const user = getUserInfo()
+	// console.log(user)
+}
+
+
+// 2.属性名表达式:
+// 2.1 含有特殊符号的key以引号包裹则不会报错，调用的时候需采取[]读取
+{
+	const obj = {
+		a: 1,
+		$abc: 2,
+		'FDASFHGFgfdsgsd$#$%^&*%$#': 3
+	};
+	// console.log(obj.FDASFHGFgfdsgsd$#$%^&*%$#) // 报错
+	// console.log(obj['FDASFHGFgfdsgsd$#$%^&*%$#']) // 3
+}
+// 2.1 []包裹key，可以包含变量
+{
+	const key = 'age';
 	const xiaoming = {
 		name: 'xiaoming',
-		age: null,
-		getAge: function() {
-	
-	
-			// ...ajax
-			setTimeout(() => {
-				this.age = 14;
-				console.log(this);
-			}, 1000);
-	
-		},
-		getNameNew: () => {
-			setTimeout(() => {
-				this.newName = 'xiaomingNew';
-				console.log(this);
-			}, 1000);
+		[key]:18, // 等价：age:18
+		[`${key}123`]: 14
+	};
+	// console.log(xiaoming.age, xiaoming[key]) // 18 18
+	// console.log(xiaoming.age123, xiaoming[`${key}123`]) // 14 14
+}
+
+// 3.结合扩展运算符
+{
+	//3.1 复制对象 - 浅拷贝
+	const obj1 = {
+		a: 1,
+		b: 2,
+		d: {
+			aa: 1,
+			bb: 2
 		}
 	};
+
+	const obj2 = {
+		c: 3,
+		a: 9
+	};
+
+	const cObj1 = { ...obj1 };
+	// console.log(cObj1.d.aa); // 1
+	// cObj1.d.aa = 999;
+	// console.log(cObj1.d.aa); // 999
+	// console.log(obj1.d.aa); // 999
+
+	// 3.2合并对象
+	const newObj = {
+		...obj2,
+		...obj1
+	};
 	
-	xiaoming.getAge(); // xiaoming
-	xiaoming.getNameNew() // window
+	newObj.d.aa = 22;
+	
+	// console.log(obj1); // obj1.d.a:22
 }
+
+// 4.部分新的方法和属性
+{
+/*4.1
+ Object.is() 方法判断两个值是否为同一个值。如果满足以下条件则两个值相等:
+	都是 undefined
+	都是 null
+	都是 true 或 false
+	都是相同长度的字符串且相同字符按相同顺序排列
+	都是相同对象（意味着每个对象有同一个引用）
+	都是数字且
+	都是 +0
+	都是 -0
+	都是 NaN
+	或都是非零而且非 NaN 且为同一个值
+	与== 运算不同。  == 运算符在判断相等前对两边的变量(如果它们不是同一类型) 进行强制转换 (这种行为的结果会将 "" == false 判断为 true), 而 Object.is不会强制转换两边的值。
+	与=== 运算也不相同。 === 运算符 (也包括 == 运算符) 将数字 -0 和 +0 视为相等 ，而将Number.NaN 与NaN视为不相等.
+ */
+	// console.log(Object.is(+0, -0)); // false
+	// console.log(+0 === -0); // true
+	// console.log(Object.is(NaN, NaN)); // true
+	// console.log(NaN === NaN); // false
+	// console.log(Object.is(true, false)); // false
+	// console.log(Object.is(true, true)); // true
+}
+
+{
+	// 4.2 浅拷贝Object.assign
+	const obj1 = Object.assign({a: 1}, {b: 2}, {c: 3}, {d: 4, e: 5});
+	// console.log(obj1 ) // {a: 1, b: 2, c: 3, d: 4, e: 5}
+	const obj2 = {
+		a: 1,
+		b: {
+			c: 2
+		}
+	};
+	let newObj = Object.assign({a: 3}, obj2);
+	// console.log(newObj.b.c); // 2
+	newObj.b.c = 100;
+	// console.log(obj2.b.c); // 100
+}
+
+{
+	const obj1 = Object.assign({a: 1}, {b: 2}, {c: 3}, {d: 4, e: 5});
+	// 4.3 Object.keys,获取对象的key组成数组
+	// console.log(Object.keys(obj1)) // ["a", "b", "c", "d", "e"]
+	// 4.4 Object.values 获取对象的值组成数组
+	// console.log(Object.values(obj1)) // [1, 2, 3, 4, 5]
+	// 4.6 Object.entries 对象的键值对组成的二维数组， key：value
+	// console.log(Object.entries(obj1)) // [['a', 1], ['b', 2], ...]
+	// 4.7 for - of
+	for (let [k, v] of Object.entries(obj1)) {
+		// console.log(k, v); // 遍历key， 属性
+	}
+}
+
+// 以下几个常用在对象的继承，混入继承中（类似Java的继承多个类）
+{
+	// 4.8 Object.setPrototypeOf:设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null
+	const obj1 = {
+		a: 1
+	};
+	const obj2 = {
+		b: 1
+	}
+	const obj = Object.create(obj1); // 创建一个新对象，使用现有的对象来提供新创建的对象的__proto__
+	console.log(obj.__proto__, obj); // {a : 1}
+	Object.setPrototypeOf(obj, obj2);
+	console.log(obj.__proto__, obj); // {b:2}
+}
+
+{
+	// 4.9 Object.getPrototypeOf
+
+	const obj1 = {a: 1};
+	const obj = Object.create(obj1);
+	console.log(obj.__proto__);
+	console.log(Object.getPrototypeOf(obj));
+	console.log(obj.__proto__ === Object.getPrototypeOf(obj)); // true
+
+}
+
+{
+	// 4.9 super 指向当前对象的原型对象
+	const obj = {name: 'xiaoming'};
+	const cObj = {
+		say() {
+			console.log(`My name is ${super.name}`); // 仅支持简写方法，function和箭头函数都无法访问super
+		}
+	}
+	Object.setPrototypeOf(cObj, obj);
+	cObj.say();
+}
+
+
+
+
+
