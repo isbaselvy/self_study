@@ -9,12 +9,12 @@
 let mokey = 'monkey'
 {
   // 死区开始
-  console.log(mokey) // 此处的mokey有这个变量了，但是没初始化，既拿不到下面的，也拿不到块外面的mokey。
+  // console.log(mokey) // 此处的mokey有这个变量了，但是没初始化，既拿不到下面的，也拿不到块外面的mokey。
   //  Cannot access 'mokey' before initialization
   // 死区结束
   let mokey = 'i am mokey too'
 }
-console.log(monkey) //  monkey is not defined
+console.log(mokey) //  monkey
 
 
 // for (let index = 0; index < 10; index++) {
