@@ -441,7 +441,7 @@ function sum(...numbers) {
 		b: 1
 	}
 	const obj = Object.create(obj1); // 创建一个新对象，使用现有的对象来提供新创建的对象的__proto__
-	console.log(obj.__proto__, obj); // {a : 1}
+	// console.log(obj.__proto__, obj); // {a : 1}
 	Object.setPrototypeOf(obj, obj2);
 	console.log(obj.__proto__, obj); // {b:2}
 }
@@ -451,9 +451,9 @@ function sum(...numbers) {
 
 	const obj1 = {a: 1};
 	const obj = Object.create(obj1);
-	console.log(obj.__proto__);
-	console.log(Object.getPrototypeOf(obj));
-	console.log(obj.__proto__ === Object.getPrototypeOf(obj)); // true
+	// console.log(obj.__proto__);
+	// console.log(Object.getPrototypeOf(obj));
+	// console.log(obj.__proto__ === Object.getPrototypeOf(obj)); // true
 
 }
 
@@ -462,14 +462,102 @@ function sum(...numbers) {
 	const obj = {name: 'xiaoming'};
 	const cObj = {
 		say() {
-			console.log(`My name is ${super.name}`); // 仅支持简写方法，function和箭头函数都无法访问super
+			// console.log(`My name is ${super.name}`); // 仅支持简写方法，function和箭头函数都无法访问super
 		}
 	}
 	Object.setPrototypeOf(cObj, obj);
 	cObj.say();
 }
 
+/***
+ * 数组的扩展
+ */
+{
+	// 结合扩展运算符使用
+	function foo(a, b, c) {
+		console.log(a);
+		console.log(b);
+		console.log(c);
+	}
+	// foo(...[1, 3, 2]);
 
+	// 数组的聚合
+	const arr1 = [1, 2, 3, 4];
+	const arr2 = [4, 2, 2, 1];
+	const arr3 = [2.2, '123', false];
+	const cArr1 = [1, 2, 3, ...arr3]; 
+	const cArr2 = [...arr1];
+	const [...cArr3] = arr3;
+	const cArr4 = [...arr1, ...arr2, ...arr3];
 
+	// 迭代器类似
+	function *g() {
+		console.log(1);
+		yield 'hi~';
+		console.log(2);
+		yield 'imooc~';
+	}
 
+	// const arr = [...g()]; // 等价下面
+	// const gg = g();
+	// gg.next();
+	// gg.next();
+}
 
+{
+	// set 元素唯一，利用此特性可做数组去重
+	let set = new Set([1, 2, 2, 3]);
+	// console.log([...set]);
+}
+
+{
+	// 新的属性和方法
+	// 1.Array.from：将类数组转换为数组，且可接受一个函数参数
+	const obj = {
+		0: 1,
+		1: '22',
+		2: false,
+		length: 2
+	};
+
+	// console.log(Array.from(obj, item => item * 2));
+	// 以下方法也可
+	// Array.prototype.slice.call();
+	// [].slice.call();
+	// [...]
+
+	// 2.Array.of
+	// console.log(Array.of(1, 2, '123', false)); // [1, 2, '123', false]
+
+	// 3.Array#fill 填充值
+	let arr = new Array(10).fill(0, 0, 3);
+	// console.log([1, 2, 3].fill(0));
+
+	// 4.Array.includes：判断数组内是否包含某个元素
+	let arr2 = [1, 2, 3, 4];
+	// console.log(arr.includes(1)); // true
+	// console.log(arr.includes(55)); // false
+
+	// 5.keys, values, entries
+	const arr3 = [1, 2, 3, 444];
+	// console.log(arr3.keys()); // 迭代器
+	// for (let i of arr.keys()) {
+	// 	console.log(i);
+	// }
+
+	for (let v of arr3.values()) {
+		// console.log(v);
+	}
+
+	for (let [i, v] of arr3.entries()) {
+		// console.log(i, v);
+	}
+
+	// 6.find 根据条件(回调) 按顺序遍历数组 当回调返回true时 就返回当前遍历到的值
+	const res = [1, 7, 6, 4].find((value, index, arr) => value % 2 === 0);
+	// console.log(res); // 6 返回找到的第一个
+
+	// 7.findIndex 根据条件(回调) 按顺序遍历数组 当回调返回true时 就返回当前遍历到的下标
+	const res2 = [1, 7, 6, 3, NaN].findIndex((value, index, arr) => Number.isNaN(value));
+	console.log(res2); // 4 返回索引，没有则返回-1
+}
