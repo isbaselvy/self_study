@@ -16,7 +16,7 @@
 // }
 
 // function C() {
-// 	P.call(this);
+// 	P.call(this); // 不能继承父类原型上的方法
 // 	this.name = 'child';
 // 	this.age = 11;
 // }

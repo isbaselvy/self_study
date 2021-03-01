@@ -29,7 +29,7 @@ class Human {
 
 class FEEngineer extends Human {
 	constructor(name, age, sex, hobby, skill, salary) {
-		super(name, age, sex, hobby);
+		super(name, age, sex, hobby); // 在this之前调用
 		this.skill = skill;
 		this.salary = salary;
 	}
@@ -49,3 +49,4 @@ const feer = new FEEngineer(
 );
 
 feer.eat();
+feer.say()

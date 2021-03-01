@@ -4,7 +4,7 @@
 // 2. 作为对象的方式调用
 
 // 1. 非静态方法中访问super -> 父类原型
-// 2. 在静态方法中访问super -> 父类
+// 2. 在静态方法中访问super -> 父类的对象
 
 // 在调用super 父类的this 始终是子类的this
 
@@ -18,7 +18,7 @@ class Human {
 
 	desc() {
 		const { name, age, sex, hobby } = this;
-
+		console.log(super.eat) // 父类原型
 		console.log(`我叫${ name }, 性别${ sex }, 爱好${ hobby }, 今年${ age }岁`);
 	}
 
@@ -46,7 +46,7 @@ class FEEngineer extends Human {
 	}
 
 	static test() {
-		console.log(super.total);
+		console.log(super.total); // 父类对象
 	}
 }
 

@@ -20,17 +20,17 @@ class Man extends Human {
 }
 
 class Woman extends Human {
-	say() {
+	say() { // say会覆盖父类的方法
 		super.say();
 		console.log('我是小姐姐');
 	}
 }
 
-new Man().say();
+new Man().say(); // 我是小哥哥
 
-new Woman().say();
+new Woman().say(); // 我是小姐姐
 
-// 重载
+// 重载，根据参数类型做不同的操作
 
 class SimpleCalc {
 	addCalc(...args) {
@@ -70,3 +70,34 @@ post('https://imooc.com', {
 	b: 2
 });
 
+// 预留接口
+class Monster {
+	constructor(name, level, model) {
+		this.name = name
+		this.level = level
+		this.model = model
+	}
+
+	//
+	attack() {
+		throw Error('必须有子类实现attack方法')
+	}
+}
+d
+class RedEyeZombie extends Monster {
+	constructor() {
+		super('红眼僵尸', 10, ModelMap['红眼僵尸'])
+	}
+}
+
+class GreenEyeZombie extends Monster {
+	constructor() {
+		super('绿眼僵尸', 10, ModelMap['红眼僵尸'])
+	}
+
+	attack() {
+		console.log('绿眼僵尸attack')
+	}
+}
+
+// 调用attack，红眼会抛错
