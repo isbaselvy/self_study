@@ -34,32 +34,27 @@
 {
     class OrdinaryUser {
         buy() {
-            console.log('ordinary buy')
+            console.log('ordinary buy') // 定价策略
         }
     }
-
     class MenberUser {
         buy() {
-            console.log('menber buy')
+            console.log('menber buy') // 定价策略
         }
     }
-
     class VipUser {
         buy() {
-            console.log('vip buy')
+            console.log('vip buy') // 定价策略
         }
     }
-    // 调用
+    // 调用，todo：如果不可避免通过条件语句实现根据入参来调用，
+    // 代码整洁之道中推荐设计再高一级的抽象类，将我们的swicth...case语句埋在抽象类的constructor中
     var u1 = new OrdinaryUser()
     u1.buy()
     var u2 = new MenberUser()
     u1.buy()
     var u3 = new VipUser()
     u1.buy()
-    /**
-     * Q: 策略模式如何通过入参来实现调用不同的构造
-     * java中会有枚举类，可以考虑用常量数组来保存用户类型，便于扩展
-     */
 }
 
 /**
@@ -188,8 +183,4 @@
     }
 }
 
-/**
- * 实现案例
- * 
- */
 
