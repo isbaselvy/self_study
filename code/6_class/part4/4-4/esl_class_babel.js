@@ -214,7 +214,7 @@ Person.instance = null;
                 configurable: true
             }
         });
-        // 将 子类 设置为 父类 的实例（优先使用 Object.setPrototypeOf）
+        // 将 子类 设置为 父类 的实例（优先使用 Object.setPrototypeOf）,访问父类的静态方法和静态属性
         if (superClass)
             Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
@@ -226,7 +226,7 @@ Person.instance = null;
             // 判断当前实例是否是调用constructor生成
             _classCallCheck(this, Child);
 
-            // 在 Child 方法中，最终拿到 _possibleConstructorReturn 执行后的结果作为新的 this 来设置构造函数里面的属性
+            // 在 Child 方法中，最终拿到 _possibleConstructorReturn 执行后的结果作为新的 this 来设置构造函数里面的属性P
             var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Child).call(this, name, age));
             //todo  如果直接用 this，而不是 _this，会出现什么问题？
             _this.name = name;
