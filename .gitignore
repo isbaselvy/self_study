@@ -1,0 +1,4 @@
+.DS_Store
+/koa-base/dist/
+npm-debug.log
+/koa-base/node_modules
