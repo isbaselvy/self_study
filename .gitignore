@@ -2,3 +2,4 @@
 /koa-base/dist/
 npm-debug.log
 /koa-base/node_modules
+/vue3/node_modules
